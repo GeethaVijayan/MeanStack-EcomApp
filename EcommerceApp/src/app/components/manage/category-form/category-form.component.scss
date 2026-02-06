@@ -1,0 +1,18 @@
+.items-center{
+    display:flex;
+    margin-top:3em;
+    flex-direction: column;
+    position: absolute;
+    left: 37em;
+}
+h1 {
+  /* Use a standard em value to mimic the traditional browser default */
+  font-size: 2em;
+  /* Add consistent margins as well */
+  margin-block: 0.67em;
+  font-weight: bold; /* Ensures it is bold */
+}
+.btn-position{
+  position:absolute;
+  left:200%;
+}

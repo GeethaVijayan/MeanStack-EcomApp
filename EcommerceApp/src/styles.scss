@@ -1,0 +1,14 @@
+/* stylelint-disable at-rule-no-unknown */
+/* Use @import form so SCSS parsers don't flag Tailwind directives as unknown.
+	PostCSS (via postcss.config.js) will still process Tailwind as usual. */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+/* stylelint-enable at-rule-no-unknown */
+
+/* Angular Material prebuilt theme (choose one: indigo-pink, deeppurple-amber, purple-green, pink-bluegrey) */
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+/* Minimal global styles */
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
