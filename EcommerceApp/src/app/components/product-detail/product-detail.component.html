@@ -1,0 +1,96 @@
+<div class="container mx-auto px-4 py-8" *ngIf="product; else loading">
+  <button mat-stroked-button (click)="goBack()" class="mb-6">← Back to Shop</button>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Product Images -->
+    <div>
+      <div class="bg-gray-100 rounded-lg overflow-hidden mb-4 h-96">
+        <img *ngIf="selectedImage" [src]="selectedImage" alt="{{ product.name }}" class="w-full h-full object-cover" />
+        <div *ngIf="!selectedImage" class="w-full h-full flex items-center justify-center text-gray-400">
+          No Image
+        </div>
+      </div>
+      <!-- Thumbnail Gallery -->
+      <div class="flex gap-2 overflow-x-auto">
+        <div *ngFor="let img of product.images" class="cursor-pointer border-2 rounded"
+             [ngClass]="{'border-blue-600': selectedImage === img, 'border-gray-300': selectedImage !== img}"
+             (click)="selectedImage = img">
+          <img [src]="img" alt="Thumbnail" class="w-20 h-20 object-cover rounded" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div>
+      <h1 class="text-3xl font-bold mb-2">{{ product.name }}</h1>
+      
+      <!-- Badges -->
+      <div class="flex gap-2 mb-4">
+        <span *ngIf="product.isNew" class="text-xs bg-green-100 text-green-800 px-3 py-1 rounded-full">New</span>
+        <span *ngIf="product.isFeatured" class="text-xs bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full">Featured</span>
+      </div>
+
+      <!-- Rating (placeholder) -->
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon>star</mat-icon>
+        <span class="text-sm text-gray-600">(120 reviews)</span>
+      </div>
+
+      <!-- Price Section -->
+      <div class="bg-gray-50 p-4 rounded-lg mb-6">
+        <div class="flex items-baseline gap-2 mb-2">
+          <span class="text-3xl font-bold text-blue-600">
+            ${{ product.price - (product.price * (product.discount || 0) / 100) | number: '1.2-2' }}
+          </span>
+          <span *ngIf="product.discount > 0" class="text-lg line-through text-gray-500">
+            ${{ product.price | number: '1.2-2' }}
+          </span>
+        </div>
+        <span *ngIf="product.discount > 0" class="text-sm font-semibold text-red-600">
+          Save {{ product.discount }}% ({{ product.price * product.discount / 100 | number: '1.2-2' }})
+        </span>
+      </div>
+
+      <!-- Description -->
+      <div class="mb-6">
+        <h3 class="font-semibold mb-2">Description</h3>
+        <p class="text-gray-600 text-sm leading-relaxed">{{ product.description }}</p>
+      </div>
+
+      <!-- Quantity Selector -->
+      <div class="flex items-center gap-4 mb-6">
+        <span class="font-semibold">Quantity:</span>
+        <button mat-icon-button (click)="quantity = quantity > 1 ? quantity - 1 : 1" class="border border-gray-300">
+          <mat-icon>remove</mat-icon>
+        </button>
+        <input type="number" [(ngModel)]="quantity" min="1" class="w-16 border border-gray-300 px-2 py-1 text-center rounded" />
+        <button mat-icon-button (click)="quantity = quantity + 1" class="border border-gray-300">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex gap-4 mb-6">
+        <button mat-raised-button color="primary" (click)="addToCart()" class="flex-1">
+          <mat-icon class="mr-2">shopping_cart</mat-icon>
+          Add to Cart
+        </button>
+        <button mat-stroked-button class="flex-1">
+          <mat-icon>favorite</mat-icon>
+        </button>
+      </div>
+
+      <!-- Stock Status -->
+      <div class="bg-blue-50 p-4 rounded-lg text-sm">
+        <p class="font-semibold text-blue-900">In Stock & Ready to Ship</p>
+        <p class="text-blue-800">Free shipping on orders over $50</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="flex justify-center items-center min-h-screen">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

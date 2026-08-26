@@ -1,10 +1,9 @@
-const { model } = require("mongoose");
 const Product = require("../db/products");
 
 //adding in db create
-async function addProduct(model) {
+async function addProduct(data) {
   let product = new Product({
-    ...model
+    ...data
   });
   await product.save();
   return product.toObject();
@@ -16,6 +15,7 @@ async function getProducts() {
   let products = await Product.find()
   return products.map(product => product.toObject());
 }
+
 
 async function getProductById(id) {
   let product = await Product.findById(id)
@@ -34,4 +34,15 @@ async function deleteProduct(id) {
   return;
 }
 
-module.exports = { addProduct, updateProduct,deleteProduct,getProducts,getProductById };
+async function getNewproducts(){
+   let newProducts = await Product.find({isNewProduct:true});
+   return newProducts.map(product => product.toObject());
+}
+
+async function getFeaturedproducts(){
+   let featuredProducts = await Product.find({isFeatured:true});
+   return featuredProducts.map(product => product.toObject());
+}
+
+
+module.exports = { addProduct, updateProduct,deleteProduct,getProducts,getProductById,getNewproducts,getFeaturedproducts };

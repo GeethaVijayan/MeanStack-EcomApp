@@ -1,10 +1,13 @@
 export interface Products{
-    id?:string,
+    _id?:string,
     name: string;
     shortDescription:string,
-    Description:string,
+    description:string,
     images:string[],
     price:number,
     discount:number,
-    categroyId:string,
+    categoryId:string,
+    brandId:string,
+    isFeatured:boolean,
+    isNew:boolean  
 }

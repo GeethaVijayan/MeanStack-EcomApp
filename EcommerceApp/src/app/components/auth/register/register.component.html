@@ -1,0 +1,47 @@
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+  <div class="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+    <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="space-y-4">
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" placeholder="Enter your full name" />
+        <mat-error *ngIf="registerForm.get('name')?.hasError('required')">Name is required</mat-error>
+        <mat-error *ngIf="registerForm.get('name')?.hasError('minlength')">Name must be at least 2 characters</mat-error>
+      </mat-form-field>
+ 
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="Enter your email" />
+        <mat-error *ngIf="registerForm.get('email')?.hasError('required')">Email is required</mat-error>
+        <mat-error *ngIf="registerForm.get('email')?.hasError('email')">Invalid email</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" placeholder="Enter your password" />
+        <mat-error *ngIf="registerForm.get('password')?.hasError('required')">Password is required</mat-error>
+        <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">Password must be at least 6 characters</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput type="password" formControlName="confirmPassword" placeholder="Confirm your password" />
+        <mat-error *ngIf="registerForm.get('confirmPassword')?.hasError('required')">Confirm password is required</mat-error>
+        <mat-error *ngIf="registerForm.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.touched">
+          Passwords do not match
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid || loading" class="w-full">
+        <span *ngIf="!loading">Register</span>
+        <mat-spinner *ngIf="loading" diameter="20" class="inline"></mat-spinner>
+      </button>
+    </form>
+
+    <p class="text-center mt-4 text-gray-600">
+      Already have an account?
+      <a routerLink="/login" class="text-blue-600 hover:underline font-semibold">Login here</a>
+    </p>
+  </div>
+</div>

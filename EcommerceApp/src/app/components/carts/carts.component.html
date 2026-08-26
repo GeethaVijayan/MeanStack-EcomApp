@@ -1,0 +1,19 @@
+<div>
+    <div *ngIf="cartItems.length > 0">
+        <h2>Shopping Cart</h2>
+        <ul>
+            <!-- <li *ngFor="let item of cartItems">
+                {{ item.name }} - ${{ item.price | number:'1.2-2' }} x {{ item.quantity }}
+            </li> -->
+        </ul>
+    </div>
+    <div *ngIf="cartCount === 0" class="empty-cart">
+        <div>
+            <img src="assets/empty-cart.png" alt="Empty Cart" class="empty-cart-image" />
+        </div>
+        <p>Your cart is empty.</p>
+    </div>
+    <div>
+
+    </div>
+</div>

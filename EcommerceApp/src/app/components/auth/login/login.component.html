@@ -1,0 +1,37 @@
+
+<div class="login-container">
+<div class="flex justify-center items-center bg-gray-100">
+  <div class="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+    <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="space-y-4">
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="Enter your email" />
+        <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email is required</mat-error>
+        <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Invalid email</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" placeholder="Enter your password" />
+        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">Password must be at least 6 characters</mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid || loading" class="w-full">
+        <span *ngIf="!loading">Login</span>
+        <mat-spinner *ngIf="loading" diameter="20" class="inline"></mat-spinner>
+      </button>
+    </form>
+    
+    <div  class="google-btn" id="google-signin-button" >
+    </div>
+
+    <p class="text-center mt-4 text-gray-600">
+      Don't have an account?
+      <a routerLink="/register" class="text-blue-600 hover:underline font-semibold">Register here</a>
+    </p>
+  </div>
+</div>
+</div>

@@ -1,31 +1,122 @@
-<div class="flex  flex-col">
-   <h1>Add New Product</h1>
-   
-     <mat-form-field appearance="fill">
-       <mat-label>Product Name</mat-label>
-       <input matInput formControlName="name" placeholder="Enter product name">
-     </mat-form-field>
+<div class="flex flex-col outline">
+  @if (id) {
+    <h1>Update Product</h1>
+  } @else {
+    <h1>Add New Product</h1>
+  }
 
-     <mat-form-field appearance="fill">
-       <mat-label>Short Description</mat-label>
-       <input matInput formControlName="shortDescription" placeholder="Enter short description">
-     </mat-form-field>
+  <form class="shadow p-4 flex flex-col" [formGroup]="productForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Product Name</mat-label>
+      <input matInput formControlName="name" placeholder="Enter product name" />
+    </mat-form-field>
 
-     <mat-form-field appearance="fill">
-       <mat-label>Description</mat-label>
-       <textarea matInput formControlName="Description" placeholder="Enter detailed description"></textarea>
-     </mat-form-field>
+    <mat-form-field>
+      <mat-label>Category</mat-label>
+      <mat-select formControlName="categoryId">
+        @for (category of categories; track $index) {
+          <mat-option [value]="category._id">{{ category.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
 
-     <mat-form-field appearance="fill">
-       <mat-label>Price</mat-label>
-       <input matInput type="number" formControlName="price" placeholder="Enter price">
-     </mat-form-field>
+    <mat-form-field>
+      <mat-label>Brand</mat-label>
+      <mat-select formControlName="brandId">
+        @for (brand of brands; track $index) {
+          <mat-option [value]="brand._id">{{ brand.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
 
-     <mat-form-field appearance="fill">
-       <mat-label>Amount</mat-label>
-       <input matInput type="number" formControlName="Amount" placeholder="Enter amount">
-     </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Short Description</mat-label>
+      <input
+        matInput
+        formControlName="shortdescription"
+        placeholder="Enter short description"
+      />
+    </mat-form-field>
 
-     <button mat-raised-button color="primary" type="submit">Save Product</button>
-     
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        placeholder="Enter detailed description"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Price</mat-label>
+      <input
+        matInput
+        type="number"
+        formControlName="price"
+        placeholder="Enter price"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Discount</mat-label>
+      <input
+        matInput
+        type="number"
+        formControlName="discount"
+        placeholder="Enter discount"
+      />
+    </mat-form-field>
+
+    <div class="w-full flex gap-8">
+      <mat-checkbox class="example-margin" formControlName="isFeatured">Is Featured</mat-checkbox>
+      <mat-checkbox class="example-margin" formControlName="isNewProduct">Is New</mat-checkbox>
+    </div>
+
+    <div class="flex flex-col" formArrayName="images">
+      <div class="flex justify-between">
+        <h1>Images</h1>
+        <button
+          class="flex justify-between"
+          mat-raised-button
+          (click)="addImages()"
+        >
+          Add Image
+        </button>
+        <button
+          class="flex justify-between"
+          mat-raised-button
+          (click)="removeImages()"
+        >
+          Remove Image
+        </button>
+      </div>
+
+      @for (img of images.controls; track $index) {
+        <mat-form-field class="w-full">
+          <mat-label>Image {{ $index + 1 }}</mat-label>
+
+          <input matInput type="text" [formControlName]="$index" />
+        </mat-form-field>
+      }
+    </div>
+    @if (id) {
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="updateProduct(productForm)"
+        type="submit"
+      >
+        Update
+      </button>
+    } @else {
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="addProduct(productForm)"
+        type="submit"
+      >
+        Add
+      </button>
+    }
+  </form>
 </div>

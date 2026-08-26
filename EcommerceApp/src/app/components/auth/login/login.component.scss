@@ -1,0 +1,28 @@
+/* Login component styles */
+
+.login-container{
+  min-height: 100%;
+  background-image: url("/assets/images/EcommImg.avif");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.login-container {
+ 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+button[type="submit"] {
+  margin-top: 1rem;
+}
+
+.google-btn{
+  padding: 20px 30px;
+}

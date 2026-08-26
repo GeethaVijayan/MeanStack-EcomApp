@@ -4,7 +4,7 @@ const {
   addProduct,
   updateProduct,
   deleteProduct,
-  getproducts,
+  getProducts,
   getProductById,
 } = require("../handlers/product-handler");
  

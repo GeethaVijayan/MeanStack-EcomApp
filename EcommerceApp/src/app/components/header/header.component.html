@@ -1,0 +1,53 @@
+<header class="header">
+  <div class="w-full flex justify-between items-center px-6">
+    <a href="/" class="text-xl font-bold">E-Commerce Admin</a>
+    <div class="flex-row flex gap-4 items-center">
+      <div class="Search-bar">
+        <input type="text" placeholder="Search..." />
+        <button type="submit">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+      <div>
+        <nav>
+          <ul class="sub-menu">
+            <li *ngFor="let category of categoryList">
+              <a
+                [routerLink]="['/category', category._id]"
+                class="hover:text-gray-300"
+                >{{ category.name }}</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div>
+        <button mat-icon-button (click)="navigateToCart( cartCount$)">
+          <mat-icon>shopping_cart</mat-icon>
+          <span class="cart-count" >{{ cartCount$ | async }}</span>
+        </button>
+      </div>
+      <div class="loginColor">
+        <div
+          class="User-profile flex gap-4 items-center"
+          *ngIf="currentUser$ | async as user"
+        >
+          <span class="text-sm">{{ user.name || user.email }}</span>
+          <a href="/profile" class="hover:text-gray-300">Profile</a>
+          <button
+            mat-button
+            (click)="logout()"
+            class="text-white hover:bg-gray-700"
+          >
+            Logout
+          </button>
+        </div>
+        <div *ngIf="!(currentUser$ | async)">
+          <a routerLink="/login" mat-button class="text-white hover:bg-gray-700"
+            >Login</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

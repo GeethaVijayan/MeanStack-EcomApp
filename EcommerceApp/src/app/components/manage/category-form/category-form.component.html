@@ -4,6 +4,15 @@
   <form class="shadow-sm w-96 p-4">
     <div class="flex flex-wrap">
       <div class="w-full gap-4">
+
+<mat-form-field>
+  <mat-label>select category</mat-label>
+  <mat-select>
+      <mat-option [value]="">option</mat-option>
+    
+  </mat-select>
+</mat-form-field>
+
           <mat-form-field class="example-full-width w-full">
     <mat-label>Category Name</mat-label>
     <input matInput placeholder="type category name" value="" [(ngModel)]="name" name="name">

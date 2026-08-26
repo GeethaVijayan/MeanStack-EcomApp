@@ -1,0 +1,79 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- Filters & Sorting -->
+  <section class="container mx-auto px-4 py-8">
+    <div class="flex flex-col md:flex-row gap-6 mb-8">
+     
+
+      <!-- Products Grid -->
+      <div class="flex-1">
+        <!-- Sorting -->
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold">Products</h2>
+          <mat-form-field appearance="fill">
+            <mat-label>Sort By</mat-label>
+            <mat-select [(ngModel)]="sortBy" (ngModelChange)="onSort()">
+              <mat-option value="newest">Newest</mat-option>
+              <mat-option value="price-low">Price: Low to High</mat-option>
+              <mat-option value="price-high">Price: High to Low</mat-option>
+              <mat-option value="featured">Featured</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Products Grid -->
+        <div *ngIf="sportsProducts.length > 0; else noProducts" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div *ngFor="let product of sportsProducts" class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
+            <!-- Product Image -->
+            <div class="h-48 bg-gray-200 rounded-t-lg overflow-hidden">
+              <img *ngIf="product.images && product.images.length > 0" [src]="product.images[0]" alt="{{ product.name }}" 
+                   class="w-full h-full object-cover hover:scale-105 transition-transform" />
+              <div *ngIf="!product.images || product.images.length === 0" class="w-full h-full flex items-center justify-center text-gray-400">
+                No Image
+              </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-2 truncate">{{ product.name }}</h3>
+              <p class="text-sm text-gray-600 mb-2 line-clamp-2">{{ product.shortDescription }}</p>
+
+              <!-- Badges -->
+              <div class="flex gap-2 mb-3">
+                <span *ngIf="product.isNew" class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">New</span>
+                <span *ngIf="product.isFeatured" class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Featured</span>
+              </div>
+
+              <!-- Price -->
+              <div class="mb-4">
+                <div class="flex items-center gap-2">
+                  <span class="text-2xl font-bold text-blue-600">${{ product.price - (product.price * (product.discount || 0) / 100) | number: '1.2-2' }}</span>
+                  <span *ngIf="product.discount > 0" class="text-sm line-through text-gray-500">${{ product.price }}</span>
+                </div>
+                <span *ngIf="product.discount > 0" class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">{{ product.discount }}% OFF</span>
+              </div>
+
+              <!-- Action Button -->
+              <button mat-raised-button color="primary" (click)="addToCart(product)" class="w-full">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- No Products Message -->
+        <ng-template #noProducts>
+          <div class="text-center py-12">
+            <p class="text-xl text-gray-600">No products found matching your criteria</p>
+          </div>
+        </ng-template>
+
+        <!-- Pagination -->
+        <div class="mt-8" *ngIf="products.length > 0">
+          <mat-paginator [length]="totalProducts" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" 
+                         (page)="onPageChange($event)" aria-label="Select page">
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

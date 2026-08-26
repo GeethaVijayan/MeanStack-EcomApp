@@ -1,0 +1,64 @@
+<div class="sidebar">
+<div class="min-h-screen bg-gray-50">
+  <!-- Filters & Sorting -->
+  <section class="container mx-auto px-4 py-8">
+    <div class="flex flex-col md:flex-row gap-6 mb-8">
+      <!-- Filters Sidebar -->
+      <div class="w-full md:w-64">
+        <div class="bg-white rounded-lg shadow p-6">
+          <h3 class="text-lg font-bold mb-4">Filters</h3>
+
+          <!-- Search -->
+          <div class="mb-6">
+            <mat-form-field appearance="fill" class="w-full">
+              <mat-label>Search Products</mat-label>
+              <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onSearch()" placeholder="Search..." />
+            </mat-form-field>
+          </div>
+
+          <!-- Category Filter -->
+          <div class="mb-6">
+            <h4 class="font-semibold mb-2">Category</h4>
+            <mat-form-field appearance="fill" class="w-full">
+              <mat-label>Select Category</mat-label>
+              <mat-select [(ngModel)]="selectedCategory" (ngModelChange)="onFilterChange()">
+                <mat-option value="">All Categories</mat-option>
+                <mat-option *ngFor="let cat of categories" [value]="cat._id">{{ cat.name }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- Brand Filter -->
+          <div class="mb-6">
+            <h4 class="font-semibold mb-2">Brand</h4>
+            <mat-form-field appearance="fill" class="w-full">
+              <mat-label>Select Brand</mat-label>
+              <mat-select [(ngModel)]="selectedBrand" (ngModelChange)="onFilterChange()">
+                <mat-option value="">All Brands</mat-option>
+                <mat-option *ngFor="let brand of brands" [value]="brand._id">{{ brand.name }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- Price Range -->
+          <div class="mb-6">
+            <h4 class="font-semibold mb-2">Price Range</h4>
+            <div class="flex gap-2">
+              <mat-form-field appearance="fill" class="flex-1">
+                <mat-label>Min</mat-label>
+                <input matInput type="number" [(ngModel)]="minPrice" placeholder="0" />
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="flex-1">
+                <mat-label>Max</mat-label>
+                <input matInput type="number" [(ngModel)]="maxPrice" placeholder="1000" />
+              </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" (click)="onFilterChange()" class="w-full mt-2">Apply</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+</div>

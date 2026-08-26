@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Category } from '../models/category';
+import { environment } from '../../environments/environment.development';
+import { catchError, throwError } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -8,29 +11,44 @@ import { Category } from '../models/category';
 export class CategoriesService {
 
   http = inject(HttpClient);
-  api = 'http://localhost:3000';
-  constructor() { }
+  snackBar = inject(MatSnackBar);
+
+  private handleError(error: any) {
+    const errorMsg = error?.error?.message || 'An error occurred';
+    this.snackBar.open(errorMsg, 'Close', { duration: 5000, panelClass: ['error-snackbar'] });
+    return throwError(() => error);
+  }
 
 
   getCategories(){
-    return this.http.get<Category[]>(`${this.api}/category`);
+    return this.http.get<Category[]>(`${environment.apiUrl}/category`).pipe(
+      catchError((error) => this.handleError(error))
+    );
   }
 
   getCategoryById(id: string){
-    return this.http.get<Category>(`${this.api}/category/${id}`);
+    return this.http.get<Category>(`${environment.apiUrl}/category/${id}`).pipe(
+      catchError((error) => this.handleError(error))
+    );
   }
   addCategory(name:any){
-    return this.http.post(`${this.api}/category`, {
+    return this.http.post(`${environment.apiUrl}/category`, {
       name:name
-    });
+    }).pipe(
+      catchError((error) => this.handleError(error))
+    );
   }
   updateCategory(id:string,name:any){
-    return this.http.put(`${this.api}/category/${id}`, {
+    return this.http.put(`${environment.apiUrl}/category/${id}`, {
       name:name
-    });
+    }).pipe(
+      catchError((error) => this.handleError(error))
+    );
   }
 
    deleteCategoryById(id: string){
-    return this.http.delete(`${this.api}/category/${id}`);
+    return this.http.delete(`${environment.apiUrl}/category/${id}`).pipe(
+      catchError((error) => this.handleError(error))
+    );
   }
 }
