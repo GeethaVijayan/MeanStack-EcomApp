@@ -1,3 +1,4 @@
+require('dotenv').config(); // Load environment variables from .env file
 const express = require("express");
 const mongoose = require("mongoose");
 const categoryRoutes = require('./routes/category')
@@ -5,6 +6,7 @@ const brandRoutes = require('./routes/brand')
 const productRoutes = require('./routes/product')
 const customerRoutes = require('./routes/customer')
 const authRoutes = require('./routes/auth')
+
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -32,10 +34,8 @@ app.use("/customer", customerRoutes);
 // MongoDB connection
 async function connectDB() {
   try {
-    await mongoose.connect("mongodb://localhost:27017", {
-      dbName: "EcommerceStore"
-    });
-    console.log("✅ MongoDB connected");
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("✅ MongoDB Atlas connected");
   } catch (err) {
     console.error("❌ MongoDB connection error:", err);
   }
